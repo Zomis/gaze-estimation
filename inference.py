@@ -126,6 +126,14 @@ def main(params):
                 bbox = face["bbox"]
                 x_min, y_min, x_max, y_max = map(int, bbox[:4])
 
+                x_min = max(0, x_min)
+                y_min = max(0, y_min)
+                x_max = max(width, x_max)
+                y_max = min(height, y_max)
+
+                if x_max <= x_min or y_max <= y_min:
+                    continue
+
                 image = frame[y_min:y_max, x_min:x_max]
                 image = pre_process(image)
                 image = image.to(device)
