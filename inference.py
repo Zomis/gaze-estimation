@@ -135,6 +135,10 @@ def main(params):
                     continue
 
                 image = frame[y_min:y_max, x_min:x_max]
+
+                if image.size == 0:
+                    continue
+
                 image = pre_process(image)
                 image = image.to(device)
 
