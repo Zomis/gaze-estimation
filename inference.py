@@ -110,16 +110,24 @@ def main(params):
     if not cap.isOpened():
         raise IOError("Cannot open webcam")
 
+    FPS = 30
+    i = -1
+    print(f"frame,frame_time,yaw_predicted,pitch_predicted")
+
     with torch.no_grad():
         while True:
+            i = i + 1
             success, frame = cap.read()
 
             if not success:
                 logging.info("Failed to obtain frame or EOF")
                 break
 
+            frame_time = int(round((i / FPS) * 1000))
+
             if is_webcam:
                 frame = cv2.flip(frame, 1)
+                frame_time = int(round(time.time() * 1000))
 
             faces = face_detector.detect(frame)
             for face in faces:
@@ -156,6 +164,7 @@ def main(params):
                 # Degrees to Radians
                 yaw_predicted = np.radians(yaw_predicted.cpu())
                 pitch_predicted = np.radians(pitch_predicted.cpu())
+                print(f"{i},{frame_time},{yaw_predicted.item()},{pitch_predicted.item()}")
 
                 # draw box and gaze direction
                 draw_bbox_gaze(frame, bbox, pitch_predicted, yaw_predicted)
