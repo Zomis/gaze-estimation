@@ -29,8 +29,8 @@ def parse_args():
     parser.add_argument(
         "--view",
         action="store_true",
-        default=True,
-        help="Display the inference results",
+        default=False,
+        help="Display the inference results in a GUI window (requires a display server)",
     )
     parser.add_argument(
         "--source",
@@ -167,7 +167,7 @@ def main(params):
                 print(f"{i},{frame_time},{yaw_predicted.item()},{pitch_predicted.item()}")
 
                 # draw box and gaze direction
-                draw_bbox_gaze(frame, bbox, pitch_predicted, yaw_predicted)
+                # draw_bbox_gaze(frame, bbox, pitch_predicted, yaw_predicted)
 
             if params.output:
                 out.write(frame)
@@ -180,7 +180,8 @@ def main(params):
     cap.release()
     if params.output:
         out.release()
-    cv2.destroyAllWindows()
+    if params.view:
+        cv2.destroyAllWindows()
 
 
 if __name__ == "__main__":
