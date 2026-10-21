@@ -123,8 +123,8 @@ def main(params):
                 logging.info("Failed to obtain frame or EOF")
                 break
 
-            frame_time = int(round((i / FPS) * 1000))
-
+            frame_time = vid.get(cv2.CAP_PROP_POS_MSEC)
+            #frame_time = int(round((i / FPS) * 1000))
             if is_webcam:
                 frame = cv2.flip(frame, 1)
                 frame_time = int(round(time.time() * 1000))
