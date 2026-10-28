@@ -112,7 +112,7 @@ def main(params):
 
     FPS = 30
     i = -1
-    print(f"frame,frame_time,yaw_predicted,pitch_predicted")
+    print(f"frame,frame_time,yaw_predicted,pitch_predicted,x_min,y_min,x_max,y_max")
 
     with torch.no_grad():
         while True:
@@ -133,6 +133,7 @@ def main(params):
             for face in faces:
                 bbox = face["bbox"]
                 x_min, y_min, x_max, y_max = map(int, bbox[:4])
+                bbox_str = f"{x_min},{y_min},{x_max},{y_max}"
 
                 x_min = max(0, x_min)
                 y_min = max(0, y_min)
@@ -164,7 +165,7 @@ def main(params):
                 # Degrees to Radians
                 yaw_predicted = np.radians(yaw_predicted.cpu())
                 pitch_predicted = np.radians(pitch_predicted.cpu())
-                print(f"{i},{frame_time},{yaw_predicted.item()},{pitch_predicted.item()}")
+                print(f"{i},{frame_time},{yaw_predicted.item()},{pitch_predicted.item()},{bbox_str}")
 
                 # draw box and gaze direction
                 # draw_bbox_gaze(frame, bbox, pitch_predicted, yaw_predicted)
