@@ -123,7 +123,7 @@ def main(params):
                 logging.info("Failed to obtain frame or EOF")
                 break
 
-            frame_time = vid.get(cv2.CAP_PROP_POS_MSEC)
+            frame_time = cap.get(cv2.CAP_PROP_POS_MSEC)
             #frame_time = int(round((i / FPS) * 1000))
             if is_webcam:
                 frame = cv2.flip(frame, 1)
@@ -137,7 +137,7 @@ def main(params):
 
                 x_min = max(0, x_min)
                 y_min = max(0, y_min)
-                x_max = max(width, x_max)
+                x_max = min(width, x_max)
                 y_max = min(height, y_max)
 
                 if x_max <= x_min or y_max <= y_min:
