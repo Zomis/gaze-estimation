@@ -38,7 +38,7 @@ def parse_args():
         default="assets/in_video.mp4",
         help="Path to source video file or camera index",
     )
-    parser.add_argument("--output", type=str, default="output.mp4", help="Path to save output file")
+    parser.add_argument("--output", type=str, default="", help="Path to save output file")
     parser.add_argument(
         "--dataset",
         type=str,
@@ -101,9 +101,9 @@ def main(params):
     else:
         cap = cv2.VideoCapture(video_source)
 
+    width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
     if params.output:
-        width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-        height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
         fourcc = cv2.VideoWriter_fourcc(*"mp4v")
         out = cv2.VideoWriter(params.output, fourcc, cap.get(cv2.CAP_PROP_FPS), (width, height))
 
