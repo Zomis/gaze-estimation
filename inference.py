@@ -170,7 +170,8 @@ def main(params):
                 print(f"{i},{frame_time},{yaw_predicted.item()},{pitch_predicted.item()},{bbox_str}")
 
                 # draw box and gaze direction
-                # draw_bbox_gaze(frame, bbox, pitch_predicted, yaw_predicted)
+                if params.view or params.output:
+                    draw_bbox_gaze(frame, bbox, pitch_predicted, yaw_predicted)
 
             if params.output:
                 out.write(frame)
