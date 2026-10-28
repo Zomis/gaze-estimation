@@ -141,11 +141,13 @@ def main(params):
                 y_max = min(height, y_max)
 
                 if x_max <= x_min or y_max <= y_min:
+                    print(f"{i},{frame_time},x_and_y,doesnt_match,{bbox_str}")
                     continue
 
                 image = frame[y_min:y_max, x_min:x_max]
 
                 if image.size == 0:
+                    print(f"{i},{frame_time},empty,image,{bbox_str}")
                     continue
 
                 image = pre_process(image)
